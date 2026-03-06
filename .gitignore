@@ -1,0 +1,16 @@
+.env
+__pycache__/
+*.pyc
+venv/
+node_modules/
+available_models.txt
+debug_output.txt
+working_model.txt
+models_list.txt
+check_models.py
+debug_models.py
+find_working_model.py
+list_genai_models.py
+test_key_models.py
+test_key_rest.py
+.vscode/

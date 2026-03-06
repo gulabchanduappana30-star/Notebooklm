@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoteVista AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.8/dist/purify.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- HEADER -->
+        <header class="app-header">
+            <div class="logo">✦ NoteVista AI</div>
+            <div class="notebook-selector">
+                <span id="current-notebook-name">My Research Notes</span>
+                <span class="chevron">▾</span>
+            </div>
+            <div class="header-actions">
+                <button class="btn-icon" id="share-btn">Share</button>
+                <button class="btn-primary">+ New Notebook</button>
+            </div>
+        </header>
+
+        <!-- MAIN WORKSPACE -->
+        <main class="workspace">
+
+            <!-- LEFT PANEL: SOURCES -->
+            <aside class="panel sources-panel">
+                <div class="panel-header">
+                    <h2>NOTEBOOKS</h2>
+                </div>
+                <!-- Notebook List -->
+                <div class="notebook-list">
+                    <div class="notebook-item active">
+                        <span class="notebook-title">My Research Notes</span>
+                        <span class="notebook-meta">1 source · Just now</span>
+                    </div>
+                </div>
+
+                <div class="panel-header mt-4">
+                    <h2>SOURCES</h2>
+                    <span class="source-count" id="source-count">0</span>
+                </div>
+
+                <div class="sources-list" id="sources-list">
+                    <!-- Source items go here -->
+                </div>
+
+                <button class="add-source-btn" id="add-source-btn">
+                    + Add source
+                </button>
+            </aside>
+
+            <!-- CENTER PANEL: CHAT -->
+            <section class="panel chat-panel">
+                <div class="chat-container">
+                    <div class="chat-history" id="chat-history">
+                        <!-- Welcome Sparkle Header -->
+                        <div class="welcome-header">
+                            <div class="sparkle-icon">✨</div>
+                            <h1>Welcome to NoteVista AI</h1>
+                            <p>Create or select a notebook to start chatting with your sources.</p>
+                            <button class="btn-primary" style="margin-top: 16px;">+ New Notebook</button>
+                        </div>
+                    </div>
+
+                    <div class="chat-suggestions" style="display: none;" id="chat-suggestions">
+                        <button class="suggestion-chip"><span class="icon">✨</span> Summarize sources</button>
+                        <button class="suggestion-chip"><span class="icon">🔑</span> Key themes</button>
+                        <button class="suggestion-chip"><span class="icon">📚</span> Study guide</button>
+                        <button class="suggestion-chip"><span class="icon">💡</span> Compare ideas</button>
+                    </div>
+
+                    <div class="chat-input-wrapper">
+                        <textarea id="chat-input" placeholder="Ask anything about your sources..." rows="1"
+                            disabled></textarea>
+                        <button id="send-btn" class="send-btn" disabled>➤</button>
+                    </div>
+                    <div class="disclaimer">NoteVista AI is grounded in your sources. Responses may not be perfect.
+                    </div>
+                </div>
+            </section>
+
+            <!-- RIGHT PANEL: STUDIO -->
+            <aside class="panel studio-panel">
+                <div class="panel-header">
+                    <h2>STUDIO <span class="sub">Generate from sources</span></h2>
+                </div>
+
+                <div class="studio-card">
+                    <div class="studio-card-icon">🎧</div>
+                    <div class="studio-card-content">
+                        <h3>Audio Overview</h3>
+                        <p>A deep dive conversation</p>
+                    </div>
+                    <button class="btn-secondary" id="audio-generate-btn">Generate</button>
+                </div>
+
+                <div class="panel-header mt-4">
+                    <h2>GENERATE</h2>
+                </div>
+
+                <div class="generate-list">
+                    <button class="generate-item" data-mode="Study Guide">
+                        <span class="icon">📄</span> Study Guide
+                    </button>
+                    <button class="generate-item" data-mode="Briefing Doc">
+                        <span class="icon">💼</span> Briefing Doc
+                    </button>
+                    <button class="generate-item" data-mode="Mind Map">
+                        <span class="icon">🧠</span> Mind Map
+                    </button>
+                    <button class="generate-item" data-mode="Flashcards">
+                        <span class="icon">📇</span> Flashcards
+                    </button>
+                    <button class="generate-item" data-mode="Quiz">
+                        <span class="icon">❓</span> Quiz
+                    </button>
+                    <button class="generate-item" data-mode="Report">
+                        <span class="icon">📊</span> Report
+                    </button>
+                    <button class="generate-item" data-mode="Slide Deck">
+                        <span class="icon">📽️</span> Slide Deck
+                    </button>
+                    <button class="generate-item" data-mode="Glossary">
+                        <span class="icon">A-Z</span> Glossary
+                    </button>
+                    <button class="generate-item" data-mode="Timeline">
+                        <span class="icon">⏱️</span> Timeline
+                    </button>
+                </div>
+
+            </aside>
+        </main>
+    </div>
+
+    <!-- MODALS -->
+    <!-- Add Source Modal -->
+    <div class="modal-overlay" id="add-source-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Add Sources</h2>
+                <button class="close-modal" id="close-source-modal">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="upload-zone" id="upload-zone">
+                    <div class="upload-icon">📄</div>
+                    <h3>Drag & drop files here</h3>
+                    <p>Supported: PDF, DOCX, TXT</p>
+                    <input type="file" id="file-input" multiple accept=".pdf,.docx,.txt" style="display: none;">
+                    <button class="btn-secondary mt-4" onclick="document.getElementById('file-input').click()">Browse
+                        Files</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Generate Result Modal -->
+    <div class="modal-overlay" id="generate-modal">
+        <div class="modal large">
+            <div class="modal-header">
+                <h2 id="generate-title">Result</h2>
+                <button class="close-modal" id="close-generate-modal">✕</button>
+            </div>
+            <div class="modal-body">
+                <div id="generate-content" class="markdown-body">
+                    <!-- Generated content goes here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
