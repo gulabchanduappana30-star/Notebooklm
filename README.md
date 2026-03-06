@@ -1,8 +1,8 @@
-# NoteVista AI ✦
+# NoteVista AI ✦ (NotebookLM Clone)
 
 NoteVista AI is a full-stack, AI-powered document research assistant, built to provide an experience similar to Google's **NotebookLM**.
 
-![NoteVista Preview](screenshot_link_placeholder)
+[![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-blue?logo=github)](https://github.com/gulabchanduappana30-star/Notebooklm)
 
 ## ✨ Features
 
